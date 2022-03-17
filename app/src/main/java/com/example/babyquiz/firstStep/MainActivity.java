@@ -37,12 +37,14 @@ public class MainActivity extends AppCompatActivity {
     String path;
     RelativeLayout container;
     Button replatAgain;
-    int[]ballVideo={R.raw.startballvedio,R.raw.success_touch_ball,R.raw.faild_touch_ball};
-    int[]appaleVideo={R.raw.selectappal1,R.raw.selectappal2,R.raw.selectappal3};
-    int[]banaappaVideo={R.raw.bana_app1,R.raw.bana_app2,R.raw.bana_app3};
-    int [] images={R.drawable.ball,R.drawable.appal2,R.drawable.banana};
-    int[][] allVideos= new int[][]{ballVideo,appaleVideo,banaappaVideo};
-    int activityPosition=0;
+    View view, view2;
+
+    int[] images = {R.drawable.ball, R.drawable.lvl1_2, R.drawable.appal2, R.drawable.banana, R.drawable.duck, R.drawable.dog, R.drawable.lion};
+    int[] startList = {R.raw.startballvedio, R.raw.lvl1_2_start, R.raw.selectappal1, R.raw.bana_app1, R.raw.duck1, R.raw.duckdog1, R.raw.lion1};
+    int[] successList = {R.raw.success_touch_ball, R.raw.lvl1_2_success, R.raw.selectappal2, R.raw.bana_app2, R.raw.duck2, R.raw.duckdog2, R.raw.lion2};
+    int[] failedList = {R.raw.faild_touch_ball, R.raw.lvl1_2_failed, R.raw.selectappal3, R.raw.bana_app3, R.raw.duck3, R.raw.duckdog3, R.raw.lion3};
+
+    int activityPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,32 +56,70 @@ public class MainActivity extends AppCompatActivity {
         container = findViewById(R.id.container);
         videoView = (VideoView) findViewById(R.id.VideoView);
         replatAgain = findViewById(R.id.reply);
-        activityPosition=getIntent().getIntExtra("actvty", 1);
+        activityPosition = getIntent().getIntExtra("actvty", 1);
 //        MediaController mediaController = new MediaController(this);
 //        mediaController.setAnchorView(videoView);
 //        videoView.setMediaController(mediaController);
-        path = "android.resource://" + getPackageName() + "/" + allVideos[activityPosition][0];
+        path = "android.resource://" + getPackageName() + "/" + startList[activityPosition];
 
         playVideo(path, true);
 
-        switch (activityPosition){
+        switch (activityPosition) {
             case 0: {
                 iv.setVisibility(View.VISIBLE);
                 iv.setImageResource(images[activityPosition]);
 
             }
             break;
+
             case 1: {
-                select_iv1.setVisibility(View.VISIBLE);
-                select_iv1.setImageResource(images[activityPosition]);
+                iv.setVisibility(View.VISIBLE);
+                iv.setImageResource(images[activityPosition]);
 
             }
-                break;
+            break;
             case 2: {
+                select_iv1.setVisibility(View.VISIBLE);
+                select_iv1.setImageResource(images[activityPosition]);
+                view = select_iv1;
+                view2 = select_iv2;
+
+            }
+            break;
+            case 3: {
                 select_iv1.setVisibility(View.VISIBLE);
                 select_iv2.setVisibility(View.VISIBLE);
                 select_iv1.setImageResource(R.drawable.appal2);
                 select_iv2.setImageResource(R.drawable.banana);
+                view = select_iv1;
+                view2 = select_iv2;
+
+
+            }
+            break;
+            case 4: {
+                select_iv2.setVisibility(View.VISIBLE);
+                select_iv2.setImageResource(R.drawable.duck);
+                view = select_iv2;
+                view2 = select_iv1;
+
+            }
+            break;
+            case 5: {
+                select_iv1.setVisibility(View.VISIBLE);
+                select_iv2.setVisibility(View.VISIBLE);
+                select_iv2.setImageResource(R.drawable.duck);
+                select_iv1.setImageResource(R.drawable.dog);
+                view = select_iv2;
+                view2 = select_iv1;
+
+            }
+            break;
+            case 6: {
+                select_iv1.setVisibility(View.VISIBLE);
+                select_iv1.setImageResource(R.drawable.lion);
+                view = select_iv1;
+                view2 = select_iv2;
 
             }
             break;
@@ -95,27 +135,27 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
-        if (activityPosition==0){
+        if (activityPosition == 0 || activityPosition == 1) {
             handler.post(runnable);
         }
+
+
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                path = "android.resource://" + getPackageName() + "/" + allVideos[activityPosition][1];
+                path = "android.resource://" + getPackageName() + "/" + successList[activityPosition];
 
                 handler.removeCallbacks(runnable);
 
                 playVideo(path, true);
             }
         });
-        select_iv1.setOnClickListener(new View.OnClickListener() {
+      if (view!=null) view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                path = "android.resource://" + getPackageName() + "/" + allVideos[activityPosition][1];
-
-                handler.removeCallbacks(runnable);
-
-                select_iv2.setVisibility(View.GONE);
+                path = "android.resource://" + getPackageName() + "/" + successList[activityPosition];
+                view.setVisibility(View.GONE);
+                view2.setVisibility(View.GONE);
                 playVideo(path, true);
             }
         });
@@ -133,8 +173,8 @@ public class MainActivity extends AppCompatActivity {
         container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                path = "android.resource://" + getPackageName() + "/" + allVideos[activityPosition][2];
-                if (activityPosition==0) {
+                path = "android.resource://" + getPackageName() + "/" + failedList[activityPosition];
+                if (activityPosition == 0 || activityPosition == 1) {
                     handler.removeCallbacks(runnable);
                     handler.post(runnable);
                 }
@@ -166,9 +206,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 if (!isSuccess) {
-                    if (activityPosition==2) {
+                    if (activityPosition == 2) {
+                        select_iv1.setVisibility(View.VISIBLE);
+                    } else if (activityPosition == 3) {
                         select_iv1.setVisibility(View.VISIBLE);
                         select_iv2.setVisibility(View.VISIBLE);
+                    } else if (activityPosition == 4) {
+                        view.setVisibility(View.VISIBLE);
+                    } else if (activityPosition == 5) {
+                        select_iv1.setVisibility(View.VISIBLE);
+                        select_iv2.setVisibility(View.VISIBLE);
+                    } else if (activityPosition == 6) {
+                        select_iv1.setVisibility(View.VISIBLE);
                     }
 //                    replatAgain.setVisibility(View.INVISIBLE);
                 }
