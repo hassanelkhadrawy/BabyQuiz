@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".firstStep.MainActivity">
 
     <VideoView
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -29,22 +29,49 @@
         android:layout_marginEnd="338dp"
         android:layout_marginBottom="70dp" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/container"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageView
-            android:id="@+id/ballImage"
-            android:layout_width="162dp"
-            android:layout_height="171dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            android:id="@+id/selectImage1"
+            android:layout_width="240dp"
+            android:layout_height="218dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="458dp"
+            android:layout_marginTop="104dp"
+            android:layout_marginEnd="33dp"
+            android:layout_marginBottom="69dp"
             app:srcCompat="@drawable/ball" />
 
-    </LinearLayout>
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/selectImage2"
+            android:layout_width="240dp"
+            android:layout_height="218dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="27dp"
+            android:layout_marginTop="112dp"
+            android:layout_marginEnd="464dp"
+            android:layout_marginBottom="81dp"
+            app:srcCompat="@drawable/ball" />
+
+        <ImageView
+            android:id="@+id/ballImage"
+            android:layout_width="168dp"
+            android:layout_height="165dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ball" />
+
+    </RelativeLayout>
 
 
 </RelativeLayout>
